@@ -1,0 +1,8 @@
+__pycache__/
+extract_cards_photos/
+
+*.vcf
+
+.DS_Store
+bday_mail_sender_today_config.py
+playgound.py
