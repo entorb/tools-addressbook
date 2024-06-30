@@ -1,0 +1,47 @@
+name: Check and Test Python Project
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1 # 0 if you want to push to repo
+
+      - name: Python set up
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          # here no pip cache needed, since pre-commit has its own and no other packages installed
+          # cache: "pip"
+
+      - name: Install dependencies
+        if: ${{ hashFiles('requirements.txt') != '' }}
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run pytest unittests
+        run: |
+          cp bday_mail_sender_today_config-EXAMPLE.py bday_mail_sender_today_config.py
+          pip install pytest
+          pytest
+
+      # - name: Install perltidy
+      #   run: sudo apt-get install -y perltidy
+
+      - name: Run pre-commit hooks
+        uses: pre-commit/action@v3.0.1
