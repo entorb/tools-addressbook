@@ -15,11 +15,13 @@ send this list via emails to me
 import datetime as dt
 import re
 import sqlite3
-import sys
+from os import chdir
 from pathlib import Path
 
-# from dateutil import parser  # for Python <= 3.10
 from bday_mail_sender_today_config import ADDRESSBOOK, FILE_ON_SERVER, MY_EMAIL
+
+# change to current dir, as addressbook is in same dir
+chdir(Path(__file__).parent)
 
 DATE_TODAY = dt.date.today()  # noqa: DTZ011
 PATH_ON_SERVER = Path(FILE_ON_SERVER)
@@ -66,7 +68,7 @@ def read_vcf(file_in: Path) -> list:
                 # remove all before ":" per regex
                 card["bday"] = re.sub(r"^[^:]*:", "", card["bday"])
                 card["bday"] = card["bday"].replace("-", "")
-                # apple uses year 1604 for unset years, I usually use 2000
+                # apple uses year 1604 for unset years, I usually use 1900
                 if card["bday"].startswith("1604"):
                     card["bday"] = "1900" + card["bday"][4:]
                 assert len(card["bday"]) == 8, card
@@ -116,7 +118,6 @@ def calc_fields(card: dict, today: dt.date = DATE_TODAY) -> dict:
     """
     Calculate next birthday, age, days to next bday.
     """
-    # date_bday = parser.isoparse(card["bday"]).date()  # for Python <= 3.10
     date_bday = dt.date.fromisoformat(card["bday"])  # for Python >= 3.11
     assert date_bday.year >= 1700, date_bday
     card["bday"] = str(date_bday)
@@ -130,23 +131,16 @@ if __name__ == "__main__":
     file_in = Path(ADDRESSBOOK)
     contacts = read_vcf(file_in)
 
-    for i in range(len(contacts)):
-        contacts[i] = calc_fields(contacts[i])
+    for i, contact in enumerate(contacts):
+        contacts[i] = calc_fields(contact)
 
     # filter: only the contacts that have birthday today
-    contacts = filter(
-        lambda x: x["days_next_bday"] == 0,
-        # x["days_next_bday"] >= 0 and x["days_next_bday"] < 7,
-        contacts,
-    )
+    contacts = [x for x in contacts if x["days_next_bday"] == 0]
+    # contacts = [x for x in contacts if 0 <= x["days_next_bday"] < 7]
 
     # sorting
     contacts = sorted(contacts, key=lambda x: x["n"])
     # contacts = sorted(contacts, key=lambda x: x["days_next_bday"])
-
-    if sys.platform == "win32":
-        for d in contacts:
-            print(d["n"], d["next_bday"].strftime("%Y-%m-%d"))
 
     if PATH_ON_SERVER.is_file() and len(contacts) > 0:
         con, cur = db_connect(use_row_factory=True)
@@ -155,10 +149,10 @@ if __name__ == "__main__":
                 con=con,
                 cur=cur,
                 send_to=MY_EMAIL,
-                subject=f'BDay: {card["n"]} ({card["age"]})',
+                subject=f"BDay: {card['n']} ({card['age']})",
                 body="",
             )
         db_disconnect(con, cur)
     else:
         for card in contacts:
-            print(f'{card["n"]} ({card["age"]})')
+            print(f"{card['n']} ({card['age']})")
