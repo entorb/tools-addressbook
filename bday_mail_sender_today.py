@@ -155,10 +155,10 @@ if __name__ == "__main__":
                 con=con,
                 cur=cur,
                 send_to=MY_EMAIL,
-                subject=f'BDay: {card["n"]} ({card["age"]})',
+                subject=f"BDay: {card['n']} ({card['age']})",
                 body="",
             )
         db_disconnect(con, cur)
     else:
         for card in contacts:
-            print(f'{card["n"]} ({card["age"]})')
+            print(f"{card['n']} ({card['age']})")

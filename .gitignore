@@ -5,4 +5,5 @@ extract_cards_photos/
 
 .DS_Store
 bday_mail_sender_today_config.py
+bday_only_upload.sh
 playgound.py

@@ -18,10 +18,9 @@ import vobject  # pip install vobject
 file_in = Path("addressbook.vcf")
 file_out = Path("bday_only.vcf")
 
-obj = vobject.readComponents(  # type: ignore
-    codecs.open(str(file_in), encoding="utf-8").read(),
-)
-contacts: list[vobject.base.Component] = list(obj)  # type: ignore
+with codecs.open(str(file_in), encoding="utf-8") as f:
+    obj = vobject.readComponents(f.read())  # type: ignore
+contacts: list[vobject.base.Component] = list(obj)
 
 contacts_filtered: list[vobject.base.Component] = []
 

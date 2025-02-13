@@ -15,7 +15,8 @@ file_in = Path("addressbook.vcf")
 
 file_out = file_in.with_suffix(".sorted-cleared.vcf")
 
-obj = vobject.readComponents(codecs.open(str(file_in), encoding="utf-8").read())  # type: ignore
+with codecs.open(str(file_in), encoding="utf-8") as f:
+    obj = vobject.readComponents(f.read())  # type: ignore
 # contacts = [contact for contact in obj]
 contacts = list(obj)
 d_all_cards_by_name = {}
