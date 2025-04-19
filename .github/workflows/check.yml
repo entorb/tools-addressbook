@@ -24,7 +24,7 @@ jobs:
       - name: Python set up
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version-file: ".python-version"
           # here no pip cache needed, if no packages installed
           # pre-commit has its own cache
           # cache: "pip"
