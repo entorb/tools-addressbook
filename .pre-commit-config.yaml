@@ -12,7 +12,7 @@
 
 exclude: |
   (?x)^(
-    .*.vscode/launch.json | old/
+    .*.vscode/.* | old/
   )$
 
 repos:
@@ -60,7 +60,7 @@ repos:
       - id: trailing-whitespace
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: "v0.9.6"
+    rev: "v0.11.6"
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
@@ -95,7 +95,7 @@ repos:
 
   # code spell check via cspell
   - repo: https://github.com/streetsidesoftware/cspell-cli
-    rev: v8.17.2
+    rev: v8.19.0
     hooks:
       - id: cspell
 
