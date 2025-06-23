@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.11
 # because of webserver
 
-# ruff: noqa: S101, PLR2004
+# ruff: noqa: PLR2004
 
 """
 Send emails per each birthday in my addressbook.
