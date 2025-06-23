@@ -1,5 +1,5 @@
 """Unit Tests."""
-# ruff: noqa: D103 DTZ011 PLR2004 S101
+# ruff: noqa: D103, DTZ011, PLR2004
 
 import datetime as dt
 
