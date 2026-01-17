@@ -11,7 +11,7 @@ from pathlib import Path
 
 import vobject  # pip install vobject
 
-file_in = Path("addressbook.vcf")
+file_in = Path("contacts.vcf")
 
 file_out = file_in.with_suffix(".sorted-cleared.vcf")
 

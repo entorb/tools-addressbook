@@ -10,7 +10,7 @@ from pathlib import Path
 
 import vobject  # pip install vobject
 
-file_in = Path("addressbook.vcf")
+file_in = Path("contacts.vcf")
 file_out = Path("bday_only.vcf")
 
 with file_in.open(encoding="utf-8") as f:

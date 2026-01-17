@@ -20,7 +20,7 @@ use MIME::Base64;                    # for PHOTO extraction
 my $s;
 my @L;
 
-my $fileIn = 'addressbook.vcf';
+my $fileIn = 'contacts.vcf';
 open( my $fhIn, '<:encoding(UTF-8)', $fileIn )
     or die encode $encodingSay, "ERROR: Can't read from file '$fileIn': $!";
 
