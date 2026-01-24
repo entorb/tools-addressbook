@@ -1,0 +1,23 @@
+# CSpell Custom Dictionary Words
+addressbook
+autoflake
+autoupdate
+bday
+binmode
+dateutil
+entorb
+isoparse
+isort
+Menke
+noqa
+outputfolder
+prodid
+pytest
+pyupgrade
+SonarCloud
+SonarQube
+Torben
+unittests
+VCARD
+vobject
+webserver
