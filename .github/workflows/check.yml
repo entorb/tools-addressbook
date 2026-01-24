@@ -1,0 +1,49 @@
+name: Check and Test Python Project
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          fetch-depth: 1 # 0 if you want to push to repo
+
+      - name: Python set up
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: ".python-version"
+          # here no pip cache needed, if no packages installed
+          # pre-commit has its own cache
+          # cache: "pip"
+
+      - name: Install dependencies
+        if: ${{ hashFiles('requirements.txt') != '' }}
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run pytest unittests
+        run: |
+          cp bday_mail_sender_today_config-EXAMPLE.py bday_mail_sender_today_config.py
+          pip install pytest
+          pytest
+
+      - name: Run pre-commit hooks
+        uses: pre-commit/action@v3.0.1
