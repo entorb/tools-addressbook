@@ -12,7 +12,4 @@ dictionaries:
 ignorePaths:
   - ".*"
   - "old"
-  - "dist"
-  - "build"
-  - "node_modules"
   - "requirements.txt"
