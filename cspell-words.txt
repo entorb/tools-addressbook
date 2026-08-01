@@ -11,6 +11,7 @@ isort
 Menke
 noqa
 outputfolder
+prek
 prodid
 pytest
 pyupgrade

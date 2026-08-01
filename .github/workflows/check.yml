@@ -35,6 +35,15 @@ jobs:
         with:
           node-version: 24
 
+      - name: Run prek pre-commit
+        uses: j178/prek-action@v2
+
+      - name: Run markdownlint
+        run: npm exec markdownlint-cli2 "**/*.md"
+
+      - name: Run cspell
+        run: npm exec cspell-cli --gitignore --unique --silent .
+
       - name: Install dependencies
         if: ${{ hashFiles('requirements.txt') != '' }}
         run: |
@@ -46,14 +55,3 @@ jobs:
           cp bday_mail_sender_today_config-EXAMPLE.py bday_mail_sender_today_config.py
           pip install pytest
           pytest
-
-      - name: Cache pre-commit envs
-        uses: actions/cache@v6
-        with:
-          path: ~/.cache/pre-commit
-          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
-
-      - name: Run pre-commit
-        run: |
-          pip install pre-commit
-          pre-commit run --all-files
