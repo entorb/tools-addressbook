@@ -1,0 +1,12 @@
+*.vcf
+.DS_Store
+/.pytest_cache/
+/.ruff_cache/
+/.rumdl_cache/
+/.venv/
+__pycache__/
+bday_mail_sender_today_config.py
+bday_only_upload.sh
+cspell-words-missing.txt
+extract_cards_photos/
+playgound.py
