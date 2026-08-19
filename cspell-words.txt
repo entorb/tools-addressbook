@@ -15,6 +15,7 @@ prodid
 pytest
 pyupgrade
 rumdl
+shfmt
 SonarCloud
 SonarQube
 Torben
